@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.byxm.mapper.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.byxm.model.Order" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="no" property="no" jdbcType="CHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="phonenumber" property="phonenumber" jdbcType="CHAR" />
+    <result column="weight" property="weight" jdbcType="DOUBLE" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="people" property="people" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="CHAR" />
+    <result column="updatetime" property="updatetime" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, no, address, phonenumber, weight, type, people, username, status, createtime, 
+    updatetime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from `order`
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from `order`
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.byxm.model.Order" >
+    insert into `order` (id, no, address,
+      phonenumber, weight, type, 
+      people, username, status, 
+      createtime, updatetime)
+    values (#{id,jdbcType=INTEGER}, #{no,jdbcType=CHAR}, #{address,jdbcType=VARCHAR}, 
+      #{phonenumber,jdbcType=CHAR}, #{weight,jdbcType=DOUBLE}, #{type,jdbcType=CHAR}, 
+      #{people,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=CHAR}, #{updatetime,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.byxm.model.Order" >
+    insert into `order`
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="phonenumber != null" >
+        phonenumber,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="people != null" >
+        people,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="updatetime != null" >
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="no != null" >
+        #{no,jdbcType=CHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null" >
+        #{phonenumber,jdbcType=CHAR},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="people != null" >
+        #{people,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=CHAR},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.byxm.model.Order" >
+    update `order`
+    <set >
+      <if test="no != null" >
+        no = #{no,jdbcType=CHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null" >
+        phonenumber = #{phonenumber,jdbcType=CHAR},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=CHAR},
+      </if>
+      <if test="people != null" >
+        people = #{people,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=CHAR},
+      </if>
+      <if test="updatetime != null" >
+        updatetime = #{updatetime,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.byxm.model.Order" >
+    update `order`
+    set no = #{no,jdbcType=CHAR},
+      address = #{address,jdbcType=VARCHAR},
+      phonenumber = #{phonenumber,jdbcType=CHAR},
+      weight = #{weight,jdbcType=DOUBLE},
+      type = #{type,jdbcType=CHAR},
+      people = #{people,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=CHAR},
+      updatetime = #{updatetime,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByUserName" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from `order` where username = #{username}
+  </select>
+  <select id="selectCount" resultType="int">
+    SELECT COUNT(id) FROM `order`
+  </select>
+  <select id="manageSelect" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from `order`
+    <where>
+      <if test="no!=null and no!=''">
+        `no` like '%' #{no} '%'
+      </if>
+      <if test="people!=null and people!=''">
+        and people like '%' #{people} '%'
+      </if>
+      <if test="status!=null and status!=''">
+        and status = #{status}
+      </if>
+    </where>
+  </select>
+</mapper>

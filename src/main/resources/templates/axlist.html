@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragment :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爱心项目</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css" >
+    <script src="../static/js/jquery-3.1.1.min.js"></script>
+    <script src="../static/js/bootstrap.js"></script>
+    
+
+    <style>
+        body{
+            background: url("../static/image/bg/concrete_seamless.png");
+        }
+
+        .f-item{
+            height: 450px;
+        }
+
+        .f-img{
+            margin-bottom: 0px;
+        }
+
+    </style>
+
+</head>
+<body class="bg">
+    <nav th:replace="_fragment :: nav" class="navbar navbar-inverse" id="mynav">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Brand</a>
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mynavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>    
+            </div>
+            <div id="mynavbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="./index.html">首页</a></li>
+                    <li><a href="./axlist.html">爱心项目</a></li>
+                    <li><a href="./artlist.html">资讯</a></li>
+                    <li><a href="./videolist.html">公益短片</a></li>
+                    <li><a href="./yfdj.html">以废代捐</a></li> 
+                    <li><a href="./user/personal.html">个人中心</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><p class="navbar-text text-success"><a href="./user/personal.html">zhangsan</a></p></li>
+                    <li><a href="#">退出</a></li>
+                </ul>               
+            </div>
+        </div>
+    </nav>
+
+
+
+    <div class="container">      
+        <!-- 新闻资讯 -->
+        <h2 class="page-header">爱心项目</h2>
+        <div class="row" th:each="list:${pros}">
+            <div class="col-md-4" th:each="project:${list.value}">
+                <div class="thumbnail f-item">
+                    <a th:href="@{/project(id=${project.id})}" href="#" class="thumbnail f-img">
+                        <img th:src="${project.imgurl}" src="../static/image/pro/1.jpg" >
+                    </a> 
+                    <div class="caption">
+                        <h3 th:text="${project.title}">彩虹口袋里的全家福</h3>
+                        <p th:text="${project.synopsis}">为乡村孩子提供美术物资和美术课程，培养和保护孩子的艺术能力。</p>
+                        <a class="btn btn-primary" th:href="@{/project(id=${project.id})}">查看详情</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div align="center">
+            <ul class="pagination" id="paginator1"></ul>
+        </div>
+
+    </div>
+    
+    <footer th:replace="_fragment :: footer">
+        <div id="foot" style="margin-top: 50px; background-color: rgb(41, 41, 41); color: #ccc;">
+            <div class="container">
+                <div class="col-md-6" style="padding: 15px 15px;">
+                    <h3>公益</h3>  
+                    <p>COPYRIGHT (©) 2019 环保公益平台. 粤ICP备15109341号</p>
+                  </div>
+                  <div class="col-md-6" style="padding-top: 35px;">
+                      <h3>关于我们</h3>
+                      <p></p>
+                  </div>
+            </div>
+        </div>
+    </footer>
+
+    <script th:replace="_fragment :: allpath"></script>
+    <script th:inline="javascript">
+        $(function () {
+            $("#paginator1").jqPaginator({
+                totalPages: [[${msg.totalPages}]],
+                visiblePages: 5,
+                currentPage: [[${msg.currentPage}]],
+                first: '<li class="first"><a href="javascript:void(0);">首页</a></li>',
+                prev: '<li class="prev"><a href="javascript:void(0);">上一页</a></li>',
+                next: '<li class="next"><a href="javascript:void(0);">下一页</a></li>',
+                last: '<li class="last"><a href="javascript:void(0);">末页</a></li>',
+                page: '<li class="page"><a href="javascript:void(0);">{{page}}</a></li>',
+                onPageChange: function (num) {
+                    if(num!=[[${msg.currentPage}]]){
+                        window.location.href=allpath+"/projectlist?p="+num;
+                    }
+                }
+            });
+
+            //处理缩略图
+            $('img').jqthumb({
+                width : '100%',//宽度
+                height : '220px',//高度
+                //position : { y: '50%', x: '50%'},//从图片的中间开始产生缩略图
+                zoom : '1',//缩放比例
+                method : 'auto'//提交方法，用于不同的浏览器环境，默认为‘auto’
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{../css/bootstrap.css}" href="../../../static/css/bootstrap.css" >
+    <script th:src="@{../js/jquery-3.1.1.min.js}" src="../../../static/js/jquery-3.1.1.min.js"></script>
+    <script th:src="@{../js/bootstrap.js}" src="../../../static/js/bootstrap.js"></script>
+</head>
+<body>
+<div class="container">
+    <div>
+        <form method="post">
+            <div class="form-group">
+                <label class="control-label">订单ID：</label>
+                <input th:value="${order.id}" disabled id="id" name="id" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="control-label">订单号：</label>
+                <input th:value="${order.no}" disabled id="no" name="no" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">状态:</label>
+                <div class="col-md-9">
+                    <select id="status" name="status" class="form-control">
+                        <option value=""></option>
+                        <option value="待取件">待取件</option>
+                        <option value="已取件">已取件</option>
+                        <option value="运输中">运输中</option>
+                        <option value="已完成">已完成</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <input id="tj" type="button" value="确认" class="btn btn-primary">
+            </div>
+        </form>
+    </div>
+</div>
+
+<script th:replace="_fragment :: allpath"></script>
+<script>
+    $('#tj').click(function () {
+        let id = $('#id').val();
+        let status = $('#status').val();
+        $.ajax({
+            type:'POST',
+            url:allpath+'/manage/orderInfo',
+            data:{
+                id:id,
+                status:status
+            },
+            success:function (response) {
+                if(response=='true'){
+                    alert('修改成功');
+                }else {
+                    alert('修改失败');
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>

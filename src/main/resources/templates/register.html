@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragment :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <script src="../static/js/jquery-3.1.1.min.js"></script>
+    <script src="../static/js/bootstrap.js"></script>
+    <script src="../static/js/jquery.md5.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2 class="page-header">欢迎注册</h2>
+        <div class="col-md-4">
+            <form class="form-horizontal" id="f" method="post" th:action="@{/doregister}">
+                
+                <div class="form-group">
+                    <label class="control-label">用户名：</label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="6-15个字符组成">
+                    <span id="s1" style="color: red;"></span>                  
+                </div>
+                <div class="form-group">
+                    <label class="control-label">密码：</label>
+                    <input type="password" id="pwd" name="password" class="form-control" placeholder="6-15个字符组成">
+                    <span id="s2" style="color: red;"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">确认密码：</label>
+                    <input type="password" id="pwd1" class="form-control">
+                    <span id="s3" style="color: red;"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">验证码：</label>
+                    <input type="text" id="yzm" class="form-control">
+                    <img id="yz" src="" th:src="@{/codeimage}">
+                    <a id="yz1" href="#"><font size="1px">看不清，换一张</font></a>
+                    <span id="s4" style="color: red;"></span>
+                </div>
+                           
+                <div class="form-group">
+                    <input id="tj" type="button" value="注册" class="btn btn-primary btn-block"><br>
+                    <p>已有账号 <a th:href="@{/login}">登录</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script th:replace="_fragment :: allpath"></script>
+<script>
+
+    //验证用户名
+    let white=/^\s+$/;
+    let num=/^[1-9a-zA-Z][0-9a-zA-Z]{5,14}$/;
+    $("#username").blur(function () {
+        let userv=$("#username").val();
+        if(userv==''||white.test(userv)||!num.test(userv)) {
+            $("#s1").html("格式不正确");
+        }else{
+            $.ajax({
+                url:allpath+'/register/usercheck?username='+userv,
+                success:function (response) {
+                    if(response=='false'){
+                        $("#s1").html("用户名重复");
+                    }
+                }
+            })
+        }
+    })
+
+    //验证密码
+    $("#pwd").blur(function () {
+        let pwd=$("#pwd").val();
+        if(pwd.length<6||pwd==""||pwd.length>15){
+            $("#s2").html("格式不正确")
+        }
+        if($("#pwd").val()!=$("#pwd1").val()){
+            $("#s3").html("密码不一致")
+        }
+    })
+    //确认密码
+    $("#pwd1").blur(function () {
+        if($("#pwd").val()!=$("#pwd1").val()){
+            $("#s3").html("密码不一致")
+        }
+    })
+
+    //清空提示信息
+    $("#username").focus(function () {
+        $("#s1").html("");
+    })
+    $("#pwd").focus(function () {
+        $("#s2").html("");
+        $("#s3").html("");
+    })
+    $("#pwd1").focus(function () {
+        $("#s3").html("");
+    })
+    $("#yzm").focus(function () {
+        $("#s4").html("");
+    })
+
+
+    //验证码图片
+    $("#yz").click(function () {
+        $("#yz").attr('src',allpath+'/codeimage?v='+new Date().getTime());
+    })
+    $("#yz1").click(function () {
+        $("#yz").attr('src',allpath+'/codeimage?v='+new Date().getTime());
+    })
+
+
+    $("#tj").click(function () {
+        let username=$("#username").val();
+        let pwd=$("#pwd").val();
+        let pwd1=$("#pwd1").val();
+        let s1=$("#s1").html();
+        let s2=$("#s2").html();
+        let s3=$("#s3").html();
+        let s4=$("#s4");
+        let yzm=$("#yzm").val();
+        if(username!=""&&pwd!=""&&pwd1!=""&&yzm!=""){
+            if(s1==""&&s2==""&&s3==""){
+                $.ajax({
+                    url:allpath+'/register/codecheck?code='+yzm,
+                    async:false,
+                    success:function (response) {
+                        if(response=='false'){
+                            s4.html('验证码错误');
+                        }
+                    }
+                })
+                if(s4.html()==""){
+                    $.ajax({
+                        type:'POST',
+                        url:allpath+'/doregister',
+                        data:{
+                            username:username,
+                            password:pwd
+                        },
+                        success:function (response) {
+                            if(response=='true'){
+                                window.location.href=allpath+'/login';
+                            }else{
+                                alert('注册失败');
+                            }
+                        }
+                    })
+                }
+            }
+
+        }else {
+            alert('请检查是否有正确输入信息');
+        }
+
+    })
+
+    
+
+</script>
+</body>
+</html>

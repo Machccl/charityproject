@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="user/_userfragment :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心</title>
+    <link rel="stylesheet" href="../../static/css/bootstrap.css">
+    <script src="../../static/js/jquery-3.1.1.min.js"></script>
+    <script src="../../static/js/bootstrap.js"></script>
+    <script src="../../static/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../static/js/xadmin.js"></script>
+
+
+    <style>
+        .nav-item{
+            padding: 15px 15px;
+            display: none;
+        }
+        body{
+            background: url("../static/image/bg/concrete_seamless.png");
+        }
+    </style>
+
+</head>
+<body>
+    <nav th:replace="user/_userfragment :: nav" class="navbar navbar-inverse" id="mynav">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Brand</a>
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mynavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>    
+            </div>
+            <div id="mynavbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="../axlist.html">爱心项目</a></li>
+                    <li><a href="../artlist.html">资讯</a></li>
+                    <li><a href="../videolist.html">公益短片</a></li>
+                    <li><a href="../yfdj.html">以废代捐</a></li> 
+                    <li><a href="#">个人中心</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><p class="navbar-text text-success"><a href="#">zhangsan</a></p></li>
+                    <li><a href="#">退出</a></li>
+                </ul>               
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div>
+            <!-- nav nav-tabs为标签页 nav nav-pills为胶囊式标签页 -->
+            <ul class="nav nav-tabs">
+                <li class="li-nav active">
+                    <a href="#">个人信息</a>
+                </li>
+                <li class="li-nav">
+                    <a href="#">以废代捐</a>
+                </li>
+                <li class="li-nav">
+                    <a href="#">捐赠项目</a>
+                </li>
+            </ul>
+            <div class="nav-item">
+                <div>
+                    <table class="table table-striped table-bordered table-hover">
+                        <tr>
+                            <th>用户名</th>
+                            <th th:text="${user.username}">zhangsan</th>
+                        </tr>
+                        <tr>
+                            <th>姓名</th>
+                            <th th:text="${user.realname}">张三</th>
+                        </tr>
+                        <tr th:if="${user.power!='0'}">
+                            <th>权限</th>
+                            <th th:text="管理员">普通用户</th>
+                        </tr>
+                        <tr>
+                            <th>邮箱</th>
+                            <th th:text="${user.email}">zhangsan@qq.com</th>
+                        </tr>
+                        <tr>
+                            <th>手机号</th>
+                            <th  th:text="${user.phonenumber}">17300000000</th>
+                        </tr>
+                        <tr>
+                            <th>地址</th>
+                            <th  th:text="${user.address}">地址</th>
+                        </tr>
+                        <tr>
+                            <th>注册时间</th>
+                            <th  th:text="${user.createtime}">2020-06-05</th>
+                        </tr>
+                    </table>
+                </div>
+                <a data-toggle="modal" data-target="#update">更新个人信息</a>
+                <a th:if="${user.power!='0'}" th:href="@{/manage/main}">后台管理</a>
+                <div id="update" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" data-dismiss="modal">&times;</span>
+                                <h3 class="modal-title">更新个人信息</h3>
+                            </div>
+                            <div class="modal-body">
+                                <form id="form-endow" method="post">
+                                    <div class="form-group">
+                                        <label class="control-label">用户ID：</label>
+                                        <input th:value="${user.id}" disabled id="userid" name="userid" type="text" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">用户名：</label>
+                                        <input th:value="${user.username}" id="username" name="username" type="text" class="form-control">
+                                        <span id="su" style="color: red;"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">邮箱：</label>
+                                        <input th:value="${user.email}" id="email" name="email" type="text" class="form-control">
+                                        <span id="se" style="color: red;"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">手机号：</label>
+                                        <input th:value="${user.phonenumber}" id="phonenum" name="phonenum" type="text" class="form-control">
+                                        <span id="sp" style="color: red;"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">地址：</label>
+                                        <input th:value="${user.address}" id="address" name="address" type="text" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="change"  type="button" value="确认" class="btn btn-primary">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item">
+                <h3>以废代捐次数<span th:text="${orderLength}" id="now" class="text-success">10000</span></h3>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>订单编号</th>
+                                <th>地址</th>
+                                <th>联系电话</th>
+                                <th>重量</th>
+                                <th>类型</th>
+                                <th>联系人</th>
+                                <th>当前状态</th>
+                                <th>创建时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>订单编号</th>
+                                <th>地址</th>
+                                <th>联系电话</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div align="center">
+                    <ul class="pagination" id="paginator1"></ul>
+                </div>
+            </div>
+            <div class="nav-item">
+                <h3>捐赠次数<span th:text="${donationLength}" class="text-success">10000</span>  捐赠金额<span th:text="${user.amount}" class="text-danger">10000</span></h3>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>捐赠金额</th>
+                            <th>项目名称</th>
+                            <th>创建时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div align="center">
+                    <ul class="pagination" id="paginator2"></ul>
+                </div>
+            </div>
+        </div>       
+    </div>
+
+</body>
+<script th:replace="user/_userfragment :: allpath"></script>
+<script th:inline="javascript">
+
+    $(function () {
+        $('.nav-item').eq(0).show(10);
+        $('.nav-item').not($('.nav-item').eq(0)).hide(10);
+
+        orderPage(1,true);
+        donationPage(1,true);
+    });
+
+    $('.li-nav').click(function(){
+        $(this).addClass('active');
+        $('.li-nav').not($(this)).removeClass('active');
+        ind=$(this).index();
+        $('.nav-item').eq(ind).stop().show(300);  //.stop()可以结束动画
+        $('.nav-item').not($('.nav-item').eq(ind)).stop().hide(10);
+    });
+
+
+    let white=/^\s+$/;
+    let num=/^[1-9a-zA-Z][0-9a-zA-Z]{5,14}$/;
+    let phone = /^1(3([0-35-9]\d|4[1-8])|4[14-9]\d|5([0-35689]\d|7[1-79])|66\d|7[2-35-8]\d|8\d{2}|9[13589]\d)\d{7}$/;
+    let e=/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+
+    //验证用户名
+    $("#username").blur(function () {
+        let userv=$("#username").val();
+        if(userv==''||white.test(userv)||!num.test(userv)) {
+            $("#su").html("格式不正确");
+        }else{
+            $.ajax({
+                url:allpath+'/register/usercheck?username='+userv,
+                success:function (response) {
+                    if(response=='false'){
+                        $("#su").html("用户名重复");
+                    }
+                }
+            })
+        }
+    });
+
+    //验证邮箱
+    $("#email").blur(function () {
+        let email=$("#email").val();
+        if(white.test(email)||!e.test(email)) {
+            $("#se").html("格式不正确");
+        }
+    });
+    //验证手机号
+    $("#phonenum").blur(function () {
+        let phonenum=$("#phonenum").val();
+        if(white.test(phonenum)||!phone.test(phonenum)) {
+            $("#sp").html("格式不正确");
+        }
+    });
+    //清空提示消息
+    $("#username").focus(function () {
+        $("#su").html("");
+    });
+    $("#email").focus(function () {
+        $("#se").html("");
+    });
+    $("#phonenum").focus(function () {
+        $("#sp").html("");
+    });
+
+    $('#change').click(function(){
+        let userid=$('#userid').val();
+        let username=$('#username').val();
+        let realname=$('#realname').val();
+        let email=$('#email').val();
+        let phonenum=$('#phonenum').val();
+        let address=$('#address').val();
+
+        let sh=$("#su").html();
+        let sp=$("#sp").html();
+        let sw=$("#se").html();
+
+        // if(username==[[${user.username}]]&&realname==[[${user.realname}]]&&email==[[${user.email}]]&&phonenum==[[${user.phonenumber}]]&&address==[[${user.address}]]){
+        //     alert('本次未做任何修改');
+        //     return;
+        // }
+
+        if(userid!=""&&username!=""){
+            if(sh==""&&sp==""&&sw==""){
+                $.ajax({
+                    type:'POST',
+                    url:allpath+'/user/update',
+                    data:{
+                        userid:userid,
+                        username:username,
+                        realname:realname,
+                        email:email,
+                        phonenumber:phonenum,
+                        address:address,
+                    },
+                    success:function (response) {
+                        if(response=='true'){
+                            alert('修改成功');
+                            window.location.reload();
+                        }else{
+                            alert('修改失败');
+                        }
+                    }
+                })
+            }
+        }else {
+            alert('请检查是否有正确输入信息');
+        }
+    });
+
+
+    function orderPage(num,isfirst) {
+        $.ajax({
+            type:"POST",
+            url:allpath+"/user/Porderpage",
+            data:{
+                page:num,
+                size:5,
+            },
+            success:function (request) {
+                let tbody=document.getElementsByTagName("tbody")[1];
+                tbody.innerHTML="";
+                for(let index in request.list){
+                    let item=request.list[index];
+                    tbody.innerHTML+="<tr>\n"+
+                        "           <td>"+item.no+"</td>\n      "+
+                        "           <td>"+item.address+"</td>\n      "+
+                        "           <td>"+item.phonenumber+"</td>\n      "+
+                        "           <td>"+item.weight+"</td>\n      "+
+                        "           <td>"+item.type+"</td>\n      "+
+                        "           <td>"+item.people+"</td>\n      "+
+                        "           <td>"+item.status+"</td>\n      "+
+                        "           <td>"+item.createtime+"</td>\n      "+
+                        "</tr>";
+                }
+                if(isfirst){
+                    $("#paginator1").jqPaginator({
+                        totalPages: request.totalPages,
+                        visiblePages: 5,
+                        currentPage: num,
+                        first: '<li class="first"><a href="javascript:void(0);">首页</a></li>',
+                        prev: '<li class="prev"><a href="javascript:void(0);">上一页</a></li>',
+                        next: '<li class="next"><a href="javascript:void(0);">下一页</a></li>',
+                        last: '<li class="last"><a href="javascript:void(0);">末页</a></li>',
+                        page: '<li class="page"><a href="javascript:void(0);">{{page}}</a></li>',
+                        onPageChange: function (num) {
+                            orderPage(num,false);
+                        }
+                    })
+                }
+            }
+        })
+
+    }
+
+    function donationPage(num,isfirst) {
+        $.ajax({
+            type:"POST",
+            url:allpath+"/user/Pdonationpage",
+            data:{
+                page:num,
+                size:5,
+            },
+            success:function (request) {
+                let tbody=document.getElementsByTagName("tbody")[2];
+                tbody.innerHTML="";
+                for(let index in request.list){
+                    let item=request.list[index];
+                    tbody.innerHTML+="<tr>\n"+
+                        "           <td>"+item.no+"</td>\n      "+
+                        "           <td>"+item.amount+"</td>\n      "+
+                        "           <td>"+item.proname+"</td>\n      "+
+                        "           <td>"+item.createtime+"</td>\n      "+
+                        "</tr>";
+                }
+                if(isfirst){
+                    $("#paginator2").jqPaginator({
+                        totalPages: request.totalPages,
+                        visiblePages: 5,
+                        currentPage: num,
+                        first: '<li class="first"><a href="javascript:void(0);">首页</a></li>',
+                        prev: '<li class="prev"><a href="javascript:void(0);">上一页</a></li>',
+                        next: '<li class="next"><a href="javascript:void(0);">下一页</a></li>',
+                        last: '<li class="last"><a href="javascript:void(0);">末页</a></li>',
+                        page: '<li class="page"><a href="javascript:void(0);">{{page}}</a></li>',
+                        onPageChange: function (num) {
+                            orderPage(num,false);
+                        }
+                    })
+                }
+            }
+        })
+
+    }
+</script>
+</html>

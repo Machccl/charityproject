@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragment :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公益短片</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css" >
+    <script src="../static/js/jquery-3.1.1.min.js"></script>
+    <script src="../static/js/bootstrap.js"></script>
+</head>
+<body class="bg">
+    <nav th:replace="_fragment :: nav" class="navbar navbar-inverse" id="mynav">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Brand</a>
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mynavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>    
+            </div>
+            <div id="mynavbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="./index.html">首页</a></li>
+                    <li><a href="./axlist.html">爱心项目</a></li>
+                    <li><a href="./artlist.html">资讯</a></li>
+                    <li><a href="./videolist.html">公益短片</a></li>
+                    <li><a href="./yfdj.html">以废代捐</a></li> 
+                    <li><a href="./user/personal.html">个人中心</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><p class="navbar-text text-success"><a href="./user/personal.html">zhangsan</a></p></li>
+                    <li><a href="#">退出</a></li>
+                </ul>               
+            </div>
+        </div>
+    </nav>
+
+
+
+    <div class="container">      
+        <!-- 新闻资讯 -->
+        <h2 class="page-header">公益短片</h2>
+        <div style="margin-top: 50px" class="row" th:each="list:${vs}">
+            <div class="col-md-3" th:each="video:${list.value}">
+                <div class="thumbnail">
+                    <img th:src="${video.imgurl}" src="https://puui.qpic.cn/qqvideo_ori/0/q0821o3tzi8_496_280/0" alt="图片">
+                    <div class="caption">
+                        <h4><a th:href="@{/video(id=${video.id})}" th:text="${video.title}">暖心公益短片《每个人都很重要》</a></h4>
+                        <p th:text="${video.createtime}">2020-10-06</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--分页-->
+    <div align="center">
+        <ul class="pagination" id="paginator1"></ul>
+    </div>
+    
+    <footer th:replace="_fragment :: footer">
+        <div id="foot" style="margin-top: 50px; background-color: rgb(41, 41, 41); color: #ccc;">
+            <div class="container">
+                <div class="col-md-6" style="padding: 15px 15px;">
+                    <h3>公益</h3>  
+                    <p>COPYRIGHT (©) 2019 环保公益平台. 粤ICP备15109341号</p>
+                  </div>
+                  <div class="col-md-6" style="padding-top: 35px;">
+                      <h3>关于我们</h3>
+                      <p></p>
+                  </div>
+            </div>
+        </div>
+    </footer>
+
+    <script th:replace="_fragment :: allpath"></script>
+    <script th:inline="javascript">
+        $(function () {
+            $("#paginator1").jqPaginator({
+                totalPages: [[${msg.totalPages}]],
+                visiblePages: 5,
+                currentPage: [[${msg.currentPage}]],
+                first: '<li class="first"><a href="javascript:void(0);">首页</a></li>',
+                prev: '<li class="prev"><a href="javascript:void(0);">上一页</a></li>',
+                next: '<li class="next"><a href="javascript:void(0);">下一页</a></li>',
+                last: '<li class="last"><a href="javascript:void(0);">末页</a></li>',
+                page: '<li class="page"><a href="javascript:void(0);">{{page}}</a></li>',
+                onPageChange: function (num) {
+                    if(num!=[[${msg.currentPage}]]){
+                        window.location.href=allpath+"/videolist?p="+num;
+                    }
+                }
+            });
+
+        });
+    </script>
+
+</body>
+</html>

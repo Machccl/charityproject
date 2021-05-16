@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragment :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>以废代捐</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css" >
+    <script src="../static/js/jquery-3.1.1.min.js"></script>
+    <script src="../static/js/bootstrap.js"></script>
+    <script src="../static/js/province.js"></script>
+    
+
+    <style>
+        body{
+            background: url("../static/image/bg/concrete_seamless.png");
+        }
+
+    </style>
+
+</head>
+<body class="bg" onload="getProvince()">
+    <nav th:replace="_fragment :: nav" class="navbar navbar-inverse" id="mynav">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Brand</a>
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mynavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>    
+            </div>
+            <div id="mynavbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="./index.html">首页</a></li>
+                    <li><a href="./axlist.html">爱心项目</a></li>
+                    <li><a href="./artlist.html">资讯</a></li>
+                    <li><a href="./videolist.html">公益短片</a></li>
+                    <li><a href="./yfdj.html">以废代捐</a></li> 
+                    <li><a href="./user/personal.html">个人中心</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><p class="navbar-text text-success"><a href="./user/personal.html">zhangsan</a></p></li>
+                    <li><a href="#">退出</a></li>
+                </ul>               
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="page-header">以废代捐</h1>
+        <div class="col-md-6">
+            <form class="form-horizontal" action="/ariah">
+               
+                <div class="form-group">
+                    <label class="control-label">省份：</label> 
+                    <select name="province" id="province" onchange="chooseProvince(this)" class="form-control">
+                        <option>请选择</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">城市：</label> 
+                    <select name="city" id="city" onchange="chooseCity(this)" class="form-control">
+                        <option>请选择</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">地区：</label> 
+                    <select name="area" id="area" class="form-control">
+                        <option>请选择</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">详细住址：</label> 
+                    <input id="house" name="house" type="text" class="form-control">
+                    <span id="s-h" style="color: red;"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">联系人：</label>
+                    <input id="contact" name="contact" type="text" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">手机号码：</label>
+                    <input id="phonenum" name="phonenum" type="text" class="form-control">
+                    <span id="s-p" style="color: red;"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">重量(kg)：</label> 
+                    <input id="weight" name="weight" type="text" class="form-control">
+                    <span id="s-w" style="color: red;"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">类型：</label> 
+                    <select name="type" id="type" class="form-control">
+                        <option value="衣裤鞋帽">衣裤鞋帽</option>
+                        <option value="数码产品">数码产品</option>
+                        <option value="家用电器">家用电器</option>
+                        <option value="书籍纸箱">书籍纸箱</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <input id="tj"  type="button" value="预约" class="btn btn-primary">
+                    <input type="button" value="取消" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+    </div>
+    <script th:replace="_fragment :: allpath"></script>
+    <script th:inline="javascript">
+        let loginname=[[${session.username}]];
+
+        let white=/^\s+$/;
+        let phone = /^1(3([0-35-9]\d|4[1-8])|4[14-9]\d|5([0-35689]\d|7[1-79])|66\d|7[2-35-8]\d|8\d{2}|9[13589]\d)\d{7}$/;
+        let w=/^\d+[.]*\d*$/;
+        //验证手机号
+        $("#phonenum").blur(function () {
+            let pnum=$("#phonenum").val();
+            if(pnum==''||white.test(pnum)||!phone.test(pnum)) {
+                $("#s-p").html("格式不正确");
+            }
+        });
+        //验证重量
+        $("#weight").blur(function () {
+            let weight=$("#weight").val();
+            if(weight==''||white.test(weight)||!w.test(weight)) {
+                $("#s-w").html("格式不正确");
+            }
+        });
+        //验证地址
+        $("#house").blur(function () {
+            let house=$("#house").val();
+            if(house==''||white.test(house)) {
+                $("#s-h").html("详细地址不能为空");
+            }
+        });
+
+        //清空提示信息
+        $("#phonenum").focus(function () {
+            $("#s-p").html("");
+        });
+        $("#weight").focus(function () {
+            $("#s-w").html("");
+        });
+        $("#house").focus(function () {
+            $("#s-h").html("");
+        });
+
+        $('#tj').click(function(){
+            if(loginname==null||loginname==''){
+                alert('请先登录');
+                return;
+            }
+            let no=orderCode();
+            let pro=$('#province').val();
+            let city=$('#city').val();
+            let area=$('#area').val();
+            let house=$('#house').val();
+            let contact=$('#contact').val();
+            let phonenum=$('#phonenum').val();
+            let weight=$('#weight').val();
+            let type=$('#type').val();
+
+            let sh=$("#s-h").html();
+            let sp=$("#s-p").html();
+            let sw=$("#s-w").html();
+
+            let address = pro+city+area+house;
+            if(house!=""&&contact!=""&&phonenum!=""&&weight!=""&&pro!="请选择"&&city!="请选择"&&area!="请选择"){
+                if(sh==""&&sp==""&&sw==""){
+                    //alert('地址-'+address+' 联系人-'+contact+' 电话-'+phonenum+' 重量-'+weight+' 类型-'+type);
+                    $.ajax({
+                        type:'POST',
+                        url:allpath+'/user/doyfdj',
+                        data:{
+                            no:no,
+                            address:address,
+                            people:contact,
+                            phonenumber:phonenum,
+                            weight:weight,
+                            type:type
+                        },
+                        success:function (response) {
+                            if(response=='true'){
+                                alert('预约成功');
+                                // window.location.href=allpath+'/index';
+                            }else{
+                                alert('预约失败');
+                            }
+                        }
+                    })
+                }
+            }else {
+                alert('请检查是否有正确输入信息');
+            }
+        });
+
+        function orderCode() {
+            let orderCode='';
+            for (let i = 0; i < 6; i++) //6位随机数，用以加在时间戳后面。
+            {
+                orderCode += Math.floor(Math.random() * 10);
+            }
+            orderCode = new Date().getTime() + orderCode;  //时间戳，用来生成订单号。
+            console.log(orderCode);
+            return orderCode;
+        }
+    </script>
+
+    
+    
+    <footer th:replace="_fragment :: footer">
+        <div id="foot" style="margin-top: 50px; background-color: rgb(41, 41, 41); color: #ccc;">
+            <div class="container">
+                <div class="col-md-6" style="padding: 15px 15px;">
+                    <h3>公益</h3>  
+                    <p>COPYRIGHT (©) 2019 环保公益平台. 粤ICP备15109341号</p>
+                  </div>
+                  <div class="col-md-6" style="padding-top: 35px;">
+                      <h3>关于我们</h3>
+                      <p></p>
+                  </div>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+</html>

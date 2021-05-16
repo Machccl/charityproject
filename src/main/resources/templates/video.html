@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragment :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${video.title}">公益短片</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css" >
+    <script src="../static/js/jquery-3.1.1.min.js"></script>
+    <script src="../static/js/bootstrap.js"></script>
+    <script src="../static/js/holder.min.js"></script>
+
+    <style>
+        
+    </style>
+
+</head>
+<body>
+    <nav th:replace="_fragment :: nav" class="navbar navbar-inverse" id="mynav">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Brand</a>
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mynavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>    
+            </div>
+            <div id="mynavbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="./index.html">首页</a></li>
+                    <li><a href="./axlist.html">爱心项目</a></li>
+                    <li><a href="./artlist.html">资讯</a></li>
+                    <li><a href="./videolist.html">公益短片</a></li>
+                    <li><a href="./yfdj.html">以废代捐</a></li> 
+                    <li><a href="./user/personal.html">个人中心</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><p class="navbar-text text-success"><a href="./user/personal.html">zhangsan</a></p></li>
+                    <li><a href="#">退出</a></li>
+                </ul>               
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h2 th:text="${video.title}" class="page-header">微笑公益短片：《微笑的力量》</h2>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" frameborder="0" th:src="@{'https://v.qq.com/txp/iframe/player.html?vid='+${video.vid}}" src="https://v.qq.com/txp/iframe/player.html?vid=j0541n1q9n4" allowFullScreen="true"></iframe>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top: 70px;">
+                <h4 class="page-header">推荐</h4>
+
+                <div class="media" th:each="item:${items}">
+                     <div class="media-left">
+                         <div class="media-object">
+                            <a th:href="@{/video(id=${item.id})}"><img width="160px" th:src="${item.imgurl}" src="../static/image/vedio/0.jpg"></a>
+                         </div>
+                     </div>
+                     <div class="media-body">
+                         <div class="media-heading">
+                         <p><a th:text="${item.title}" th:href="@{/video(id=${item.id})}">微笑公益短片：《微笑的力量》</a></p>
+                         </div>
+                      </div>
+                 </div>
+
+             </div> 
+        </div> 
+
+           
+    </div>
+
+    <footer th:replace="_fragment :: footer">
+        <div id="foot" style="margin-top: 50px; background-color: rgb(41, 41, 41); color: #ccc;">
+            <div class="container">
+                <div class="col-md-6" style="padding: 15px 15px;">
+                    <h3>公益</h3>  
+                    <p>COPYRIGHT (©) 2019 环保公益平台. 粤ICP备15109341号</p>
+                  </div>
+                  <div class="col-md-6" style="padding-top: 35px;">
+                      <h3>关于我们</h3>
+                      <p></p>
+                  </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <!--  指定连接数据库的JDBC驱动包所在位置  -->
+    <classPathEntry location="D:\University\mysql-connector-java-8.0.15.jar"/>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!-- Mysql数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/byxm?serverTimezone=UTC"
+                        userId="root"
+                        password="66666">
+        </jdbcConnection>
+        <!-- Oracle数据库
+            <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
+                connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:yycg"
+                userId="yycg"
+                password="yycg">
+            </jdbcConnection>
+        -->
+
+        <!-- 默认为false，把JDBC DECIMAL 和NUMERIC类型解析为Integer，为true时
+        把JDBC DECIMAL 和NUMERIC类型解析为java.math.BigDecimal -->
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!-- targetProject：生成POJO类的位置 -->
+        <javaModelGenerator targetPackage="com.byxm.model"
+                            targetProject="src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false" />
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!-- targetProject：mapper映射文件生成的位置 -->
+        <sqlMapGenerator targetPackage="com.byxm.mapper"
+                         targetProject="src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+        <!-- targetProject：mapper接口生成的的位置 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.byxm.mapper"
+                             targetProject="src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+
+        <!-- 指定数据表 -->
+<!--        <table tableName="user"  domainObjectName="User"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"></table>-->
+
+<!--        <table tableName="article"  domainObjectName="Article"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"></table>-->
+
+<!--        <table tableName="donation"  domainObjectName="Donation"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"></table>-->
+
+        <table tableName="order"  domainObjectName="Order"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false"></table>
+
+<!--        <table tableName="project"  domainObjectName="Project"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"></table>-->
+
+<!--        <table tableName="video"  domainObjectName="Video"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"></table>-->
+
+        <!-- 有些表的字段需要指定java类型
+        <table schema="DB2ADMIN" tableName="ALLTYPES" domainObjectName="Customer" >
+          <property name="useActualColumnNames" value="true"/>
+          <generatedKey column="ID" sqlStatement="DB2" identity="true" />
+          <columnOverride column="DATE_FIELD" property="startDate" />
+          <ignoreColumn column="FRED" />
+          <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" />
+        </table> -->
+
+    </context>
+</generatorConfiguration>

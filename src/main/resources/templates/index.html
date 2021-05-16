@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragment :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公益</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css" >
+    <script src="../static/js/jquery-3.1.1.min.js"></script>
+    <script src="../static/js/bootstrap.js"></script>
+    
+
+    <style>
+        body{
+            background: url("../static/image/bg/concrete_seamless.png");
+        }
+
+        .f-item{
+            height: 450px;
+        }
+
+        .f-img{
+            margin-bottom: 0px;
+        }
+
+    </style>
+
+</head>
+<body class="bg">
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="mynav">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Brand</a>
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mynavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>    
+            </div>
+            <div id="mynavbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a th:href="@{/index}">首页</a></li>
+                    <li><a th:href="@{/projectlist}">爱心项目</a></li>
+                    <li><a th:href="@{/artlist}" href="./artlist.html">资讯</a></li>
+                    <li><a th:href="@{/videolist}" href="./videolist.html">公益短片</a></li>
+                    <li><a th:href="@{/yfdj}" href="./yfdj.html">以废代捐</a></li>
+                    <li><a th:href="@{/user/personal}" href="./user/personal.html">个人中心</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li th:if="${session.username == null} "><a th:href="@{/login}">登录</a></li>
+                    <li th:if="${session.username != null} "><p class="navbar-text text-success"><a th:href="@{/user/personal}" href="./user/personal.html" th:text="${session.username}">用户</a></p></li>
+                    <li th:if="${session.username != null} "><a th:href="@{/logout}" href="#">退出</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 轮播图 -->
+    <div style="margin-top: 50px;">
+        <div id="mycarousel" class="carousel slide" data-ride="carousel">
+            <!-- 幻灯片图片 -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img width="100%" th:src="@{image/banner/1.jpg}" src="../static/image/banner/1.jpg" alt="">
+                </div>
+                <div class="item">
+                    <img width="100%" th:src="@{image/banner/2.jpg}" src="../static/image/banner/2.jpg" alt="">
+                </div>
+                <div class="item">
+                    <img width="100%" th:src="@{image/banner/3.jpg}" src="../static/image/banner/3.jpg" alt="">
+                </div>              
+            </div>
+            <!-- 指示灯 -->
+            <ol class="carousel-indicators">
+                <li class="active" data-target="#mycarousel" data-slide-to="0"></li>
+                <li data-target="#mycarousel" data-slide-to="1"></li>
+                <li data-target="#mycarousel" data-slide-to="2"></li>
+            </ol>
+            <!-- 左右按钮 -->
+            <a href="#mycarousel" class="left carousel-control" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a href="#mycarousel" class="right carousel-control" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <h2 class="page-header">公益项目</h2>
+        <!-- 公益项目 -->
+        <div class="row">
+            <div class="col-md-4" th:each="project:${projects}">
+                <div class="thumbnail f-item">
+                    <a th:href="@{/project(id=${project.id})}" class="thumbnail f-img">
+                        <img th:src="${project.imgurl}" src="../static/" class="draw">
+                    </a> 
+                    <div class="caption">
+                        <h3 th:text="${project.title}">彩虹口袋里的全家福</h3>
+                        <p th:text="${project.synopsis}">为乡村孩子提供美术物资和美术课程，培养和保护孩子的艺术能力。</p>
+                        <a class="btn btn-primary" th:href="@{/project(id=${project.id})}">查看详情</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+        <!-- 新闻资讯 -->
+        <h2 class="page-header">新闻资讯</h2>
+        <div class="row">
+            
+            <div class="col-md-4" th:each="article:${articles}">
+                <div class="thumbnail">
+                    <img th:src="${article.imgurl}" src="https://puui.qpic.cn/qqvideo_ori/0/q0821o3tzi8_496_280/0" class="draw">
+                    <div class="caption">
+                        <h4><a th:text="${article.title}" th:href="@{/article(id=${article.id})}">暖心公益短片《每个人都很重要</a></h4>
+                        <p th:text="${article.createtime}">2020-10-06</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 公益短片 -->
+        <h2 class="page-header">公益短片</h2>
+        <div class="row">
+
+            <div class="col-md-3" th:each="video:${videos}">
+                <div class="thumbnail">
+                    <img th:src="${video.imgurl}" src="https://puui.qpic.cn/qqvideo_ori/0/j0541n1q9n4_496_280/0" >
+                    <div class="caption">
+                        <h4><a href="./video.html" th:text="${video.title}" th:href="@{/video(id=${video.id})}">微笑公益短片：《微笑的力量》</a></h4>
+                        <p th:text="${video.createtime}">2020-10-07</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+
+    </div>
+    
+    <footer th:replace="_fragment :: footer">
+        <div id="foot" style="margin-top: 50px; background-color: rgb(41, 41, 41); color: #ccc;">
+            <div class="container">
+                <div class="col-md-6" style="padding: 15px 15px;">
+                    <h3>公益</h3>  
+                    <p>COPYRIGHT (©) 2019 环保公益平台. 粤ICP备15109341号</p>
+                  </div>
+                  <div class="col-md-6" style="padding-top: 35px;">
+                      <h3>关于我们</h3>
+                      <p></p>
+                  </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        $(function () {
+            //处理缩略图
+            $('.draw').jqthumb({
+                width : '100%',//宽度
+                height : '220px',//高度
+                //position : { y: '50%', x: '50%'},//从图片的中间开始产生缩略图
+                zoom : '1',//缩放比例
+                method : 'auto'//提交方法，用于不同的浏览器环境，默认为‘auto’
+            });
+        })
+    </script>
+
+</body>
+</html>

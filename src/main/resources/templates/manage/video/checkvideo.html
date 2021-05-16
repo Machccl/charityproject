@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{../css/bootstrap.css}" href="../../../static/css/bootstrap.css" >
+    <script th:src="@{../js/jquery-3.1.1.min.js}" src="../../../static/js/jquery-3.1.1.min.js"></script>
+    <script th:src="@{../js/bootstrap.js}" src="../../../static/js/bootstrap.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h2 th:text="${video.title}" class="page-header">微笑公益短片：《微笑的力量》</h2>
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" frameborder="0" th:src="@{'https://v.qq.com/txp/iframe/player.html?vid='+${video.vid}}" src="https://v.qq.com/txp/iframe/player.html?vid=j0541n1q9n4" allowFullScreen="true"></iframe>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

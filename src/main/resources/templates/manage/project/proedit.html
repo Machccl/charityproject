@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{../css/bootstrap.css}" href="../../../static/css/bootstrap.css" >
+    <script th:src="@{../js/jquery-3.1.1.min.js}" src="../../../static/js/jquery-3.1.1.min.js"></script>
+    <script th:src="@{../js/bootstrap.js}" src="../../../static/js/bootstrap.js"></script>
+</head>
+<body>
+<div class="container">
+    <div>
+        <form method="post">
+            <div class="form-group">
+                <label class="control-label">文章ID：</label>
+                <input th:value="${project.id}" disabled id="id" name="id" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="control-label">文章标题：</label>
+                <input th:value="${project.title}" id="title" name="title" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="control-label">文章简介：</label>
+                <input th:value="${project.synopsis}" id="synopsis" name="synopsis" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="control-label">图片地址：</label>
+                <input th:value="${project.imgurl}" id="imgurl" name="imgurl" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="control-label">总金额：</label>
+                <input th:value="${project.total}" id="total" name="total" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="control-label">已捐金额：</label>
+                <input th:value="${project.now}" id="now" name="now" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <input id="tj" type="button" value="确认" class="btn btn-primary">
+            </div>
+        </form>
+    </div>
+</div>
+
+<script th:replace="_fragment :: allpath"></script>
+<script>
+    $('#tj').click(function () {
+        let to=/^\d+$/; //判断输入的总金额是否为数字
+        let no=/^\d+[.]*\d*$/; //判断输入的已捐金额是否为数字
+        let id = $('#id').val();
+        let title = $('#title').val();
+        let synopsis=$('#synopsis').val();
+        let imgurl = $('#imgurl').val();
+        let total = $('#total').val();
+        let now = $('#now').val();
+
+        if(title==null||title==''||synopsis==null||synopsis==''||imgurl==null||imgurl==''||synopsis==null||synopsis==''||total==null||total==''||now==null||now==''){
+            alert('信息不能为空');
+            return;
+        }
+        if(!to.test(total)||!no.test(now)||parseInt(total)<parseInt(now)){
+            alert('信息输入错误');
+            return;
+        }
+        $.ajax({
+            type:'POST',
+            url:allpath+'/smanage/proInfo',
+            data:{
+                id:id,
+                title:title,
+                imgurl:imgurl,
+                total:total,
+                now:now
+            },
+            success:function (response) {
+                if(response=='true'){
+                    alert('修改成功');
+                }else {
+                    alert('修改失败');
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>

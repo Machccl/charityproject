@@ -1,0 +1,17 @@
+.f-item{
+    height: 450px;
+}
+.f-img{
+    margin-bottom: 0px;
+}
+.bg{
+    background: url("../image/bg/concrete_seamless.png");
+}
+.loginbg{
+    background-image: url("../image/bg.png");
+    background-size: 100%;
+}
+.nav-item{
+    padding: 15px 15px;
+    display: none;
+}

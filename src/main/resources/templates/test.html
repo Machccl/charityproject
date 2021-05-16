@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragment :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css" >
+    <link rel="stylesheet" href="../static/lib/editor/css/editormd.min.css">
+    <script src="../static/js/jquery-3.1.1.min.js"></script>
+    <script src="../static/js/bootstrap.js"></script>
+    <script src="../static/lib/editor/editormd.min.js"></script>
+
+    <script src="../static/lib/editor/lib/jquery.flowchart.min.js"></script>
+    <script src="../static/lib/editor/lib/flowchart.min.js"></script>
+    <script src="../static/lib/editor/lib/marked.min.js"></script>
+    <script src="../static/lib/editor/lib/prettify.min.js"></script>
+    <script src="../static/lib/editor/lib/raphael.min.js"></script>
+    <script src="../static/lib/editor/lib/sequence-diagram.min.js"></script>
+    <script src="../static/lib/editor/lib/underscore.min.js"></script>
+    
+
+</head>
+<body>
+    <nav th:replace="_fragment :: nav" class="navbar navbar-inverse" id="mynav">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Brand</a>
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mynavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>    
+            </div>
+            <div id="mynavbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="./index.html">首页</a></li>
+                    <li><a href="./axlist.html">爱心项目</a></li>
+                    <li><a href="./artlist.html">资讯</a></li>
+                    <li><a href="./videolist.html">公益短片</a></li>
+                    <li><a href="./yfdj.html">以废代捐</a></li> 
+                    <li><a href="./user/personal.html">个人中心</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><p class="navbar-text text-success"><a href="./user/personal.html">zhangsan</a></p></li>
+                    <li><a href="#">退出</a></li>
+                </ul>               
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 50px;">
+        <div class="row">
+            <div class="col-md-8">
+                <h2 class="page-header" th:text="${a.title}">流浪动物绝育行动</h2>
+                <p><span class="glyphicon glyphicon-list-alt" th:text="${a.createtime}">2020-09-20</span></p>
+                <div id="test-editormd"  >
+                    <textarea th:text="${a.content}" style="display: none" name="test-editormd-markdown-doc">
+“二十天，一群人，我们改变了一只狗的命运！”
+
+一只德牧妹妹，在满是垃圾、只有四堵墙的拆迁楼里待了一年多。她每天的生活就是向窗外探出头，盼望好心人的投喂，以及傻傻地等待那个早已遗弃她的主人。
+
+武汉市小动物保护协会（以下简称武小协或协会）对她展开了救援。远远地看上去，她似乎很亲人，体格庞大的她看起来威风凛凛，但近距离接触时，才发现她眼神里流露出的恐惧和担忧。
+
+这是一只很渴望被亲近，却又因太久没有接触外界，而显得有些怯生生的狗狗。
+
+检查身体、绝育……德牧的身体状况恢复到了正常水平。为了感谢武汉市第八人民医院医务人员的照顾，武小协给这只德牧取名为“八妹”。
+
+![](https://images-w.oola.cn/oola-web/imgs/20200810/20200810152833092zFp.png)
+
+近日，有部队的兵哥哥联系到武小协，希望能领养八妹。为她准备了两箱“嫁妆”后，协会的工作人员将绳子和陪伴八妹的使命，一同交到了兵哥哥的手里。
+
+自2006年开始，武小协（前身为武汉流浪宠物救助站）一直坚持动物保护工作，呼吁领养代替购买，用爱终止流浪。
+
+这不是他们第一次进入大众视野。
+
+早在疫情封城期间，武小协就因发起宠物上门救助的志愿活动引发关注，武小协的工作人员及其他志愿者们在新冠肺炎肆虐武汉之际勇敢逆行，帮助暂时无法返汉的家庭上门投喂猫狗。
+
+![](https://images-w.oola.cn/oola-web/imgs/20200810/20200810152841264bkR.png)
+
+这样的公益行动因地因时制宜，也因其新冠肺炎的背景而变得特殊和意义非凡。
+
+小噢对话武小协协会会长杜帆，和他聊了聊置身于其中的经历和心得。
+                    </textarea>
+                </div>
+            </div>
+
+            <div class="row col-md-4" style="margin-top: 200px;">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <h4>推荐</h4>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="media">
+                            <div class="media-left">
+                                <div class="media-object">
+                                    <img src="../static/image/pro/1.jpg" th:src="@{image/pro/1.jpg}" width="70px">
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <div class="media-heading">
+                                    <p>为乡村孩子提供美术物资和美术课程，培养和保护孩子的艺术能力。</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="media-left">
+                                <div class="media-object">
+                                    <img src="../static/image/pro/1.jpg" th:src="@{image/pro/1.jpg}" width="70px">
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <div class="media-heading">
+                                    <p>为乡村孩子提供美术物资和美术课程，培养和保护孩子的艺术能力。</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="media-left">
+                                <div class="media-object">
+                                    <img src="../static/image/pro/1.jpg" th:src="@{image/pro/1.jpg}" width="70px">
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <div class="media-heading">
+                                    <p>为乡村孩子提供美术物资和美术课程，培养和保护孩子的艺术能力。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        
+    </div>
+
+
+
+    <footer th:replace="_fragment :: footer">
+        <div id="foot" style="margin-top: 50px; background-color: rgb(41, 41, 41); color: #ccc;">
+            <div class="container">
+                <div class="col-md-6" style="padding: 15px 15px;">
+                    <h3>公益</h3>  
+                    <p>COPYRIGHT (©) 2019 环保公益平台. 粤ICP备15109341号</p>
+                  </div>
+                  <div class="col-md-6" style="padding-top: 35px;">
+                      <h3>关于我们</h3>
+                      <p></p>
+                  </div>
+            </div>
+        </div>
+    </footer>
+</body>
+<script>
+    let testEditor;
+    $(function () {
+        testEditor = editormd.markdownToHTML("test-editormd", {
+            htmlDecode :"style, script, iframe",
+            emoji           : true,
+            taskList        : true,
+            tex             : true,  // 默认不解析
+            flowChart       : true,  // 默认不解析
+            sequenceDiagram : true,  // 默认不解析
+        });
+    })
+
+</script>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="${title}">Title</title>
+    <link rel="stylesheet" th:href="@{../css/bootstrap.css}">
+    <link th:href="@{../css/font.css}" rel="stylesheet" href="../../static/css/font.css">
+    <link rel="stylesheet" th:href="@{../lib/editor/css/editormd.min.css}">
+    <link rel="stylesheet" th:href="@{../css/mystyle.css}">
+    <link th:href="@{../css/xadmin.css}" rel="stylesheet" href="../../static/css/xadmin.css">
+    <script th:src="@{../js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{../js/bootstrap.js}"></script>
+    <script th:src="@{../js/jq-paginator.js}"></script>
+    <script th:src="@{../lib/editor/editormd.min.js}"></script>
+    <script th:src="@{../js/jquery.md5.js}"></script>
+    <script th:src="@{../js/jqthumb.min.js}"></script>
+    <script th:src="@{../js/province.js}"></script>
+
+    <script th:src="@{../lib/layui/layui.js}" src="../../static/lib/layui/layui.js" charset="utf-8"></script>
+    <script th:src="@{../js/xadmin.js}" type="text/javascript" src="../../static/js/xadmin.js"></script>
+
+    <script th:src="@{../lib/editor/lib/jquery.flowchart.min.js}"></script>
+    <script th:src="@{../lib/editor/lib/flowchart.min.js}"></script>
+    <script th:src="@{../lib/editor/lib/marked.min.js}"></script>
+    <script th:src="@{../lib/editor/lib/prettify.min.js}"></script>
+    <script th:src="@{../lib/editor/lib/raphael.min.js}"></script>
+    <script th:src="@{../lib/editor/lib/sequence-diagram.min.js}"></script>
+    <script th:src="@{../lib/editor/lib/underscore.min.js}"></script>
+
+    <base th:href="@{/}">
+</head>
+<body>
+
+
+<script th:fragment="allpath" th:inline="javascript">
+        //获取协议名称
+        let scheme=[[${#request.getScheme()}]];
+        //获取服务器名称
+        let servername=[[${#request.getServerName()}]];
+        //获取服务器端口
+        let serverport=[[${#request.getServerPort()}]];
+        //获取上下文根
+        let contextpath=[[${#request.getContextPath()}]];
+
+        let allpath=scheme+"://"+servername+":"+serverport+contextpath;
+</script>
+
+</body>
+</html>

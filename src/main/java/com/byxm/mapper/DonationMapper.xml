@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.byxm.mapper.DonationMapper" >
+  <resultMap id="BaseResultMap" type="com.byxm.model.Donation" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="no" property="no" jdbcType="CHAR" />
+    <result column="amount" property="amount" jdbcType="DOUBLE" />
+    <result column="proname" property="proname" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, no, amount, proname, username, createtime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from donation
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from donation
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.byxm.model.Donation" >
+    insert into donation (id, no, amount, proname, 
+      username, createtime)
+    values (#{id,jdbcType=INTEGER}, #{no,jdbcType=CHAR}, #{amount,jdbcType=DOUBLE}, #{proname,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{createtime,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.byxm.model.Donation" >
+    insert into donation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="proname != null" >
+        proname,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="no != null" >
+        #{no,jdbcType=CHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="proname != null" >
+        #{proname,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.byxm.model.Donation" >
+    update donation
+    <set >
+      <if test="no != null" >
+        no = #{no,jdbcType=CHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="proname != null" >
+        proname = #{proname,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.byxm.model.Donation" >
+    update donation
+    set no = #{no,jdbcType=CHAR},
+      amount = #{amount,jdbcType=DOUBLE},
+      proname = #{proname,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectAllByUserName" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from donation where username = #{username}
+  </select>
+  <select id="selectCount" resultType="int">
+    SELECT COUNT(id) FROM donation
+  </select>
+</mapper>
